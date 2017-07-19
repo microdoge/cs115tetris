@@ -1,12 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game2 : MonoBehaviour {
 
     public static int boundaryheight = 20;
     public static int boundarywidth = 10;
     public static Transform[,] boundaryaxis = new Transform[boundarywidth, boundaryheight];
+
+    //variables for generating score
+    private int number_of_canceled_lines2 = 0;
+    public int score_cancel_oneline2 = 60;
+    public int score_cancel_twoline2 = 180;
+    public int score_cancel_threeline2 = 800;
+    public int score_cancel_fourline2 = 2200;
+    private int hardmode_current_score = 0;
+    public Text hardmode_score;
 
     // Use this for initialization
     void Start() {
@@ -15,7 +25,41 @@ public class Game2 : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        gamescore_function2();
+        gamescore_helper_function2();
+        //update the score during the game
+    }
 
+    public void gamescore_helper_function2()
+    {
+
+        hardmode_score.text = hardmode_current_score.ToString();
+        //convert the current score to text format
+    }
+
+    public void gamescore_function2()
+    {
+        if (number_of_canceled_lines2 > 0)
+        {
+            if (number_of_canceled_lines2 == 4)
+            {
+                hardmode_current_score = hardmode_current_score + score_cancel_fourline2;
+            }
+            else if (number_of_canceled_lines2 == 3)
+            {
+                hardmode_current_score = hardmode_current_score + score_cancel_threeline2;
+            }
+            else if (number_of_canceled_lines2 == 2)
+            {
+                hardmode_current_score = hardmode_current_score + score_cancel_twoline2;
+            }
+            else if (number_of_canceled_lines2 == 1)
+            {
+                hardmode_current_score = hardmode_current_score + score_cancel_oneline2;
+            }
+
+            number_of_canceled_lines2 = 0;
+        }
     }
 
     public bool checkwithinboundary2(Vector2 pos) {
@@ -34,9 +78,6 @@ public class Game2 : MonoBehaviour {
 		GameObject next_block1 = (GameObject)Instantiate(Resources.Load(get_block_names2(), typeof(GameObject)), new Vector2(x_value, 22.0f), Quaternion.identity);
     }
 
-//	public void generatenextblock1() {
-//		GameObject next_block = (GameObject)Instantiate(Resources.Load(get_block_names1(), typeof(GameObject)), new Vector2(5.0f, 22.0f), Quaternion.identity);
-//	}
 
     string get_block_names2() {
         int random_num = Random.Range(1, 8);
@@ -68,35 +109,7 @@ public class Game2 : MonoBehaviour {
         return random_block_name;
     }
 
-//	string get_block_names1() {
-//		int random_num = Random.Range(1, 8);
-//		string random_block_name = "Prefabs 1/BLOCK_J";
-//		switch (random_num) {
-//
-//		case 1:
-//			random_block_name = "Prefabs 1/BLOCK_J";
-//			break;
-//		case 2:
-//			random_block_name = "Prefabs 1/BLOCK_L";
-//			break;
-//		case 3:
-//			random_block_name = "Prefabs 1/BLOCK_long";
-//			break;
-//		case 4:
-//			random_block_name = "Prefabs 1/BLOCK_S";
-//			break;
-//		case 5:
-//			random_block_name = "Prefabs 1/BLOCK_square";
-//			break;
-//		case 6:
-//			random_block_name = "Prefabs 1/BLOCK_T";
-//			break;
-//		case 7:
-//			random_block_name = "Prefabs 1/BLOCK_Z";
-//			break;
-//		}
-//		return random_block_name;
-//	}
+
 
     public void update_boundary2(Blocks2 block) {
 
@@ -136,6 +149,7 @@ public class Game2 : MonoBehaviour {
                 return false;
             }
         }
+        number_of_canceled_lines2++;
         return true;
     }
 
@@ -184,23 +198,6 @@ public class Game2 : MonoBehaviour {
         }
 
     }
-
-//    public bool istouchbotton(Blocks theblock) {
-//        for (int x = 0; x < boundarywidth; ++x)
-//        {
-//
-//            foreach (Transform mino in theblock.transform)
-//            {
-//                Vector2 theposition = Round(mino.position);
-//                if (theposition.y == 1)
-//                {
-//                    return true;
-//                }
-//            }
-//
-//        }
-//        return false;
-//    }
 
     public bool isoverlimit2(Blocks2 theblock){
 

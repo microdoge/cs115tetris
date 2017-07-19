@@ -33,12 +33,6 @@ public class Blocks : MonoBehaviour {
         downbutton = GameObject.FindGameObjectWithTag("Downbutton").GetComponent<Button>();
         downbutton.onClick.AddListener(() => movedownbutton());
 
-//		easy_mode_button = GameObject.FindGameObjectWithTag("Easymodebutton").GetComponent<Button>();
-//		easy_mode_button.onClick.AddListener(() => seteasyspeed());
-//
-//		normal_mode_button = GameObject.FindGameObjectWithTag("Normalmodebutton").GetComponent<Button>();
-//		normal_mode_button.onClick.AddListener(() => setnormalspeed());
-
     }
 	
 	// Update is called once per frame
